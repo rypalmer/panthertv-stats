@@ -1,0 +1,2 @@
+# AddHandler phpFive .php
+# Action phpFive /cgi-bin/php.cgi

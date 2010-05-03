@@ -1,0 +1,139 @@
+File: AuthClass.txt
+Script Name: vAuthenticate 3.0.1
+Author: Vincent Ryan Ong
+Email: support@beanbug.net
+
+Description:
+vAuthenticate is a revolutionary authentication script which uses
+PHP and MySQL for lightning fast processing. vAuthenticate comes 
+with an admin interface where webmasters and administrators can
+create new user accounts, new user groups, activate/inactivate 
+groups or individual accounts, set user level, etc. This may be
+used to protect files for member-only areas. vAuthenticate 
+uses a custom class to handle the bulk of insertion, updates, and
+deletion of data. This class can also be used for other applications
+which needs user authentication.
+
+This script is a freeware but if you want to give donations,
+please send your checks (coz cash will probably be stolen in the
+post office) them to:
+
+Vincent Ryan Ong
+Rm. 440 Wellington Bldg.
+655 Condesa St. Binondo, Manila
+Philippines, 1006
+
+
+**********************************************************************
+auth.cls Class Description
+**********************************************************************
+Class name: auth
+
+Functions available:
+- authenticate ($username, $password)
+- page_check ($username, $password)
+- modify_user ($username, $password, $team, $level, $status)
+- delete_user ($username)
+- add_user ($username, $password, $team, $level, $status, '', 0)
+- add_team ($teamname, $teamlead, $status)
+- modify_team ($teamname, $teamlead, $status)
+- delete_team ($teamname)
+
+
+FUNCTION DESCRIPTIONS:
+1. authenticate
+
+	This function is the usually the first one encountered because
+	this provides the authentication and matching of the username
+	and password fields
+
+	UPON SUCCESS: return row information
+	UPON FAILURE: return false
+
+2. page_check
+
+	This function is the one that checks acess to pages via direct
+	or indirect method. This checks the username and password in 
+	the cookie and matches them with the one in the DB to ensure
+	maximum security.
+	
+	UPON SUCCESS: return row information
+	UPON FAILURE: return false
+
+3. modify_user
+	
+	This function makes the changes to the user details in the DB
+	such that it would conform with the ones entered in the form
+
+	LEVEL IS BLANK: return "blank level"
+	PASSWORD IS BLANK: does not modify the saved password
+	"sa" is set to "inactive": return "sa" cannot be inactivated"
+	"admin" is set to "inactive": return "admin" cannot be inactivated"
+	UPON SUCCESS: return 1
+
+4. delete_user
+
+	This function deletes a user from authuser table.
+
+	Delete "sa": return "User sa cannot be deleted.";
+	Delete "admin": return "User admin cannot be deleted.";
+	Delete "test": return "User test cannot be deleted.";
+	UPON SUCCESS OR FAILURE: return database error [ mysql_error() ]
+
+5. add_user
+
+	This function adds a new user to the database table
+
+	username is blank: return "blank username"
+	level is blank: return "blank level"
+	username already exists: "username exists"
+	UPON SUCCESS: returns 1 [ mysql_affected_rows() ]
+
+6. add_team
+
+	This function adds a new team to the table
+	
+	teamname is blank: return "blank team name"
+	teamname already exists: return "group exists" 
+	UPON SUCCESS: returns 1 [ mysql_affected_rows() ]
+
+7. modify_team
+	
+	This function edits the current team info and updates it. If the status of
+	a team is set to inactive, all members under that team automaticall 
+	becomes inactive too.
+
+	Admin team set to inactive: return "Admin team cannot be inactivated."
+	Ungrouped team set to inactive: return "Ungrouped team cannot be inactivated."
+	UPON SUCCESS: return 1
+
+8. delete_team
+	
+	This function deletes a user group from the database. Once successful, 
+	every member of the deleted group automatically becomes Ungrouped, meaning,
+	a part of the team "Ungrouped"
+
+	delete Admin team: return "Admin team cannot be deleted."
+	delete Ungrouped team: return "Ungrouped team cannot be deleted."
+	delete Temporary team: return "Temporary team cannot be deleted."
+	UPON SUCCESS OR FAILURE: return database error [ mysql_error() ]
+
+
+
+CLASS USAGE:
+**************
+1. Include the class
+	example: include("auth.php");
+
+2. create a new instance of the class
+	example: $sample = new auth();
+
+3. use the functions: syntax: 
+	$variable = $instance->function([parameter values]);
+	
+	example: $test = $sample->add_user("user1","secret","Team A","5","active", '', 0)
+	-- see Functions Available to get list of functions and their parameters
+	-- The second to the last parameter is the lastlogin field. This should be left blank
+		upon addition/insertion of new member
+	-- The last parameter is the logincount field. This should also be left blank upon
+		addition/insertion of new member

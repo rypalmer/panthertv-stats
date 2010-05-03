@@ -1,0 +1,203 @@
+File: faq.txt
+Script Name: vAuthenticate 3.0.1
+Author: Vincent Ryan Ong
+Email: support@beanbug.net
+
+Description:
+vAuthenticate is a revolutionary authentication script which uses
+PHP and MySQL for lightning fast processing. vAuthenticate comes 
+with an admin interface where webmasters and administrators can
+create new user accounts, new user groups, activate/inactivate 
+groups or individual accounts, set user level, etc. This may be
+used to protect files for member-only areas. vAuthenticate 
+uses a custom class to handle the bulk of insertion, updates, and
+deletion of data. This class can also be used for other applications
+which needs user authentication.
+
+This script is a freeware but if you want to give donations,
+please send your checks (coz cash will probably be stolen in the
+post office) them to:
+
+Vincent Ryan Ong
+Rm. 440 Wellington Bldg.
+655 Condesa St. Binondo, Manila
+Philippines, 1006
+
+
+++++++++++++++++++++++++++++++
+FREQUENTLY ASKED QUESTIONS (FAQ's)
+++++++++++++++++++++++++++++++
+
+Q1. Can I add new fields to the authuser database and then just modify the auth.php
+	file? I wanted to add fields like email address, birthday, etc. which are user-
+	specific.
+A1. Technically, you can. However, I extremely advise against doing this because 
+	with auth.php being a class, it was meant not to be touched with regard to
+	the functions that it contain. A workaround to your concern is to create a new
+	table with a foreign key for authuser's uname field. This will be the link between
+	the 2 tables. You can then put whatever info you want on the second table.
+	To see a script in action which uses vAuthenticate but never modified the 
+	authuser and authgroup tables, please see vSignup (available for download at
+	the vScripts area in http://www.beanbug.net)
+
+Q2. How do I allow users to sign themselves up instead of me adding them 1 by 1?
+A2. vSignup might be more appropriate for your needs. You may download it at the 
+	 vScripts area in http://www.beanbug.net.
+
+Q3. What are levels for?
+A3. Actually, aside from user level 1, which is the administrator level, this field is for
+	informational purposes only. However, you may use this field as the point of
+	authentication. Meaning, you may restrict access to a page depending on the 
+	level of the user that has logged in (see vAuthenticate.php for case in point).
+	If you don't use levels for such a function, it won't have any impact at all.
+	Starting on version 3.0, there will be a sample page for implementing 
+	authentication on a per-level basis. The file can be found under the members
+	folder with a filename of bylevel.php. You may check out the code if you want
+	to know more about it. 
+
+Q4. What are groups for?
+A4. Just like levels, you may use teams/groups as your authentication point. For example, 
+	in vAuthenticate.php, instead of making an if-else statement for the level, we
+	may look at the team/group to asses if the user is allowed to view the secured
+	page. Starting on version 3.0, there will be a sample page for implementing 
+	authentication on a per-level basis. The file can be found under the members
+	folder with a filename of bylevel.php. You may check out the code if you want
+	to know more about it. 
+
+Q5. What does an "inactive" status mean?
+A5. An inactive status makes the specific user unable to login and view the secured areas.
+
+Q6. How do I display the login name or other user details in the secured pages?
+A6. If you want to display the username, all you have to do is display $USERNAME via an
+	"echo" or a "print" statement. However, if you want to display other details such
+	as team, level, or status of the user, you would have to display it like:
+	
+	echo $check['FIELD']; 
+	or
+	print $check['FIELD'];
+
+	where FIELD is either team, level, or status.
+
+	You would also be using this method if you plan on making if-else statements
+	based on the values that any of these field hold.
+
+Q7. I get this error message when I try to login:
+	Warning: mysql_fetch_array(): supplied argument is not a valid MySQL result 
+	resource in /some/path/public_html/folder/folder/auth.php on line 54
+A7. In PHP, getting an error similar this either means:
+	* You have spelled your database name wrong
+	* You have spelled your username wrong
+
+	Take note that PHP is case sensitive. UserName is not the same with USERname.
+	Going back to vAuthenticate, re-check your authconfig.php and auth.php and see
+	if you have spelled those correctly.
+
+Q8. I’m testing vauthenticate, and the only thing I can get out of it, is: 
+	Notice: Undefined variable: username in D:\WWW\auth\vAuthenticate.php on line 43
+	Notice: Undefined variable: password in D:\WWW\auth\vAuthenticate.php on line 43
+A8. This is basically resolved by making sure that you have register_globals set to "On" in your
+	PHP.ini file (If you are making use of a web host and does not have direct access to
+	the PHP modules and PHP.ini file, ask your Web Host to turn this feature on).
+	
+	* NOTE: Starting on version 3.0, vAuthenticate will work even with register_globals
+	            turned off.
+
+Q9. How do I create a backup of my data?
+A9. If you have phpMyAdmin in your website, you can create a dump for your data. This will
+	show you the SQL statements that can be executed to restore the data. For more
+	information on this, please consult your phpMyAdmin users manual.
+
+Q10. Why are there 2 administrator accounts instead of just 1 (only sa)?
+A10. This is for backup purposes. Just in case you forgot the sa password, there's another
+	user who has administrative rights assuming that you did not create new admin
+	accounts.
+
+Q11. Can I delete the sa and admin accounts?
+A11. No. Both cannot be deleted.
+
+Q12. Can I delete the test account?
+A12. No. Actually, there's no logical explanation for this but it wouldn't hurt if it just sits
+	there.
+
+Q13. Does vAuthenticate work for sites using an IP address instead of a domain name?
+A13. Starting on version 3.0, sites using an IP address would be able to use vAuthenticate.
+
+Q14. Does vAuthenticate provide data encryption?
+A14. No. However, starting on version 3, the password field is now encrypted to provide
+	a more secure authenticating medium.
+
+Q15. Why is the password field left blank after selecting a username from the list found
+	on the right portion of the page in authuser.php?
+A15. Since the password field from the DB is encrypted, auth.php was modified to recognize 
+	that if you leave the password empty upon pressing the Modify button, it won't 
+	change the existing password for the user. However, if you put some value into
+	the said field, auth.php would set it to that value.
+
+Q16. How can I protect a page that is outside the directory where vAuthenticate.php is
+	stored? For example: 
+		DOMAIN: http://www.mysite.com
+		vAuthenticate INSTALLATION: http://www.mysite.com/vAuth
+		MEMBERS' DIRECTORY: http://www.mysite.com/members
+		vAuthenticate ADMINISTRATION: http://www.mysite.com/vAuth/admin
+A16. Basically, this is how vAuthenticate's security works. We set the user session after
+	the user clicks on the button to login. This will call vAuthenticate.php which 
+	stores the username and password in 2 cookie variables which will be used 
+	throughout the site. As with cookies, you can only use its value wherever
+	you set it and all the subdirectories under the directory where you've set it. 
+	Referring to your example, you won't be able to secure your members' directory
+	since it is outside the directory where you are setting the cookies 
+	(http://www.mysite.com/vAuth).
+	
+	To get around this, we need to do 3 things:
+	1. Move/Copy vAuthenticate.php from http://www.mysite.com/vAuth to the root
+		directory which is http://www.mysite.com. With this, we can be sure
+		that our cookies are set in the root directory.
+	2. Modifiy authconfig.php's $resultpage variable to accommodate the new 
+		path to the file. This should be relative to the login file. If you are going
+		to use the login.php file provided with the vAuthenticate package, you'd
+		have to set $resultpage to something like "../vAuthenticate.php"
+	3. Modify vAuthenticate.php to accommodate the path to auth.php and 
+		authconfig.php. If we're going to use the example above, instead of 
+		having these lines on line 41 and 42:
+
+	  	include_once ("auth.php");
+		include_once ("authconfig.php");
+ 
+		You need to change this into:
+	  	
+		include_once ("vAuth/auth.php");
+		include_once ("vAuth/authconfig.php");
+ 
+		
+	* NOTE: Remember that all values on A16 are all based on an example. You have to
+		change this according to your setup.
+
+Q17. After changing the password in the members' area, why am I booted out of my session?
+A17. This happens to anyone (including admins) who tries to modify their password while
+	they are logged in. This is because as far as the cookies are concerned, they 
+	contain the username and password combination you used when you logged in.
+	After changing your password, the system updates the authuser database which 
+	would make your current session username and password not match with the ones
+	in the database. You would have to login again after changing your password.
+
+Q18. I pulled up the login screen and attempted to login but it gives me a "Page not Found" 
+	error with the url of http://www.somedomain.com/<?%20print%20$resultpage%20?>. 
+A18. This is because the page where you have the login portion has a .html extension in its filename
+	instead of .php (or .php3 or .phtml).
+	
+Q19. I installed vAuthenticate and executed createdb.sql successfully. However, when I try to login,
+	I get an error stating that the username and password I entered does not match or that I 
+	entered the wrong password.
+A19. The first thing you need to check is of course, that you're entering the correct username and
+	password combination. These are case sensitive so "access" is not the same as "Access".
+	After this, you need to go to your DB Manager (phpMyAdmin, for example) and make sure that
+	ALL columns in your authuser table is in small caps. There are instances where the level and 
+	status fields become "LEVEL" and "STATUS" respectively (automatically done by MySQL). If
+	any columns (NOT the actual table valeus, mind you) are in capital letters, rename them 
+	to have all small caps.
+
+Q20. I have some questions that are not listed here. Where can I contact you for support?
+A20. For support on vAuthenticate, you may send your inquiries to support@beanbug.net
+
+----------------------------------------
+Last Modified: September 19, 2003

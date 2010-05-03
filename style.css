@@ -1,0 +1,57 @@
+body {	
+	height: 100%;
+	text-align: center;
+	font-family: 'Trebuchet MS', Verdana, Arial, Serif;
+	font-size: 15px;
+	letter-spacing: 1px;
+	background: #0F5E49;
+}
+
+#container {
+		width: 760px;
+		margin-left: auto;
+		margin-right: auto;
+		text-align: left;
+		background: #FFFFFF;
+		}
+
+.table		{
+		background-color:#AC9B7D; 
+		border: 1;
+		width: 800px;
+		}
+.small		{
+		font: 0.7em "MS Verdana" sans-serif;
+		font-color: white;
+		text-decoration: none;
+		}
+p		{
+		font: 0.9em "MS Verdana" sans-serif;
+		font-color: white;
+		text-decoration: none;		
+		}
+
+.lcol		{
+		position: relative;
+		left: 0px;
+		width: 600px;
+		}
+
+.rcol		{
+		position: relative;
+		left: 150px;
+		right: 100px;
+		}
+.fcol		{
+
+		float: right;
+		width: 20%;
+		}
+
+.image 	{
+		border: none; 
+		}
+
+a img 	{
+		border: none; 
+		}
